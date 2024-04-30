@@ -36,4 +36,8 @@ public class PizzaPedida {
     @Column(name = "quantidade")
     private Integer quantidade;
 
+    @JsonIgnore
+    @OneToMany(mappedBy ="pizzaPedida", fetch = FetchType.LAZY) //lazy otimiza a busca
+    private Set<PizzaPedidaIngrediente> pizzaPedidasIngrediente;
+
 }

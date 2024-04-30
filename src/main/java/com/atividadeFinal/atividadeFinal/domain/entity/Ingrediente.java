@@ -1,11 +1,13 @@
 package com.atividadeFinal.atividadeFinal.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @Entity
@@ -24,4 +26,8 @@ public class Ingrediente {
 
     @Column(name = "preco")
     private BigDecimal preco;
+
+    @JsonIgnore
+    @OneToMany(mappedBy ="ingrediente", fetch = FetchType.LAZY) //lazy otimiza a busca
+    private Set<PizzaPedidaIngrediente> pizzaPedidasIngrediente;
 }
