@@ -17,8 +17,9 @@ import java.util.Set;
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -32,7 +33,7 @@ public class Pedido {
     private LocalDate dataHora;
 
     @JsonIgnore
-    @OneToMany(mappedBy ="pedido", fetch = FetchType.LAZY) //lazy otimiza a busca
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="pedido") //lazy otimiza a busca
     private Set<PizzaPedida> pizzaPedidas;
 
 }

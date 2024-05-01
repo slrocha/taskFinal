@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @Entity
 @AllArgsConstructor
@@ -15,8 +13,9 @@ import java.math.BigDecimal;
 public class BebidaPedida {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")

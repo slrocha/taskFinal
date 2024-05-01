@@ -2,12 +2,15 @@ package com.atividadeFinal.atividadeFinal.rest.controller;
 
 import com.atividadeFinal.atividadeFinal.domain.entity.Bebida;
 import com.atividadeFinal.atividadeFinal.domain.entity.Fornada;
-import com.atividadeFinal.atividadeFinal.domain.repository.Bebidas;
 import com.atividadeFinal.atividadeFinal.domain.repository.Fornadas;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/fornadas")
@@ -56,5 +59,17 @@ public class FornadaController {
                     return fornadaExistente;
                 })
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bebida não encontrada"));
+    }
+
+    @GetMapping
+    public List<Bebida> find(Bebida filtro){
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(
+                        ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, matcher);
+        return fornadasRepository.findAll(example);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Bebida {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -26,6 +26,6 @@ public class Bebida {
     @Column(name = "preco", precision = 20, scale = 2)
     private BigDecimal preco;
 
-    @OneToMany(mappedBy = "bebida")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bebida")
     private List<BebidaPedida> bebidasPedidas;
 }
