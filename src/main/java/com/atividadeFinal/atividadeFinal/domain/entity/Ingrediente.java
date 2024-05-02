@@ -26,8 +26,4 @@ public class Ingrediente {
 
     @Column(name = "preco")
     private BigDecimal preco;
-
-    @JsonIgnore
-    @OneToMany(mappedBy ="ingrediente", fetch = FetchType.LAZY) //lazy otimiza a busca
-    private Set<PizzaPedidaIngrediente> pizzaPedidasIngrediente;
 }

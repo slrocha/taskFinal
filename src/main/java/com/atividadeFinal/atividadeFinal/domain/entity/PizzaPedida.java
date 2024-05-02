@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -37,7 +38,11 @@ public class PizzaPedida {
     private Integer quantidade;
 
     @JsonIgnore
-    @OneToMany(mappedBy ="pizzaPedida", fetch = FetchType.LAZY) //lazy otimiza a busca
-    private Set<PizzaPedidaIngrediente> pizzaPedidasIngrediente;
-
+    @ManyToMany
+    @JoinTable(
+            name = "pizza_pedida_has_ingrediente",
+            joinColumns =  @JoinColumn(name = "pizza_pedida_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
+    )
+    private Set<PizzaPedida> pizzaPedida;
 }
