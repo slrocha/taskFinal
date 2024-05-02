@@ -29,12 +29,11 @@ public class ClienteController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Cliente getClienteById(@PathVariable Integer id){
         return clientesRepository.findById(id)
                 .orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Bebida não encontrada"));
+                                "Cliente não encontrado"));
     }
 
     @DeleteMapping("{id}")

@@ -29,7 +29,6 @@ public class BebidaController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Bebida getBebidaById(@PathVariable Integer id){
         return bebidasRepository.findById(id)
                 .orElseThrow( () ->

@@ -36,9 +36,6 @@ public class Cliente {
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "preco")
-    private BigDecimal preco;
-
     @JsonIgnore
     @OneToMany(mappedBy ="cliente", fetch = FetchType.LAZY) //lazy otimiza a busca
     private Set<Pedido> pedidos;

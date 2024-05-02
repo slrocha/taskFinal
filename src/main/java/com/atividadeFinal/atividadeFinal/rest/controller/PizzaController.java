@@ -32,7 +32,6 @@ public class PizzaController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Pizza getPizzaById(@PathVariable Integer id){
         return pizzasRepository.findById(id)
                 .orElseThrow( () ->

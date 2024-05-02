@@ -30,12 +30,11 @@ public class FornadaController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Fornada getFornadaById(@PathVariable Integer id){
         return fornadasRepository.findById(id)
                 .orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Bebida não encontrada"));
+                                "Fornada não encontrada"));
     }
 
     @DeleteMapping("{id}")
