@@ -2,6 +2,7 @@ package com.atividadeFinal.atividadeFinal.rest.controller;
 
 import com.atividadeFinal.atividadeFinal.domain.entity.Bebida;
 import com.atividadeFinal.atividadeFinal.domain.repository.Bebidas;
+import com.atividadeFinal.atividadeFinal.service.BebidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,61 +16,33 @@ import java.util.List;
 @RequestMapping("/api/bebidas")
 public class BebidaController {
 
-    @Autowired
-    private Bebidas bebidasRepository;
-
-    public BebidaController(Bebidas bebidas){
-        this.bebidasRepository = bebidas;
-    }
+    private BebidaService bebidaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Bebida salvar(@RequestBody Bebida bebida){
-        return bebidasRepository.save(bebida);
+        return this.bebidaService.salvar(bebida);
     }
 
     @GetMapping("{id}")
     public Bebida getBebidaById(@PathVariable Integer id){
-        return bebidasRepository.findById(id)
-                .orElseThrow( () ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Bebida não encontrada"));
+        return this.bebidaService.findById(id);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Bebida deleteBebidaById(@PathVariable Integer id){
-        return bebidasRepository.findById(id)
-                .map( bebida -> {
-                    bebidasRepository.delete(bebida);
-                    return bebida;
-                })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bebida não encontrada"));
+        return this.bebidaService.delete(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Bebida updateBebidaById(@PathVariable Integer id, @RequestBody Bebida bebida){
-        return bebidasRepository.findById(id)
-                .map( bebidaExistente -> {
-                    bebidaExistente.setId(bebida.getId());
-                    bebidasRepository.save(bebida);
-                    return bebidaExistente;
-                })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bebida não encontrada"));
+        return this.bebidaService.updateById(id, bebida);
     }
 
     @GetMapping
     public List<Bebida> find(Bebida filtro){
-        //metodo que permite buscar por todos os dados da base da table especifico bem como filtrar por qualquer coluna que contenha  na
-        //base de dados, ignorando letras maiuscula/minuscula
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING);
-
-        Example example = Example.of(filtro, matcher); //pegar as propriedas populadas e criar o objeto
-        return bebidasRepository.findAll(example);
+        return this.bebidaService.findAll(filtro);
     }
 }
